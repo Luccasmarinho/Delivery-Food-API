@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 interface IError {
-  statusCodeError: number;
+  statusCode: number;
   message: string;
 }
 
@@ -10,13 +10,13 @@ const handleError = (
   res: Response,
   next: NextFunction
 ): Response => {
-  const status = err.status || 500;
-  const message = err.message || "Internal server error.";
-  const ReturnError: IError = {
-    statusCodeError: status,
-    message: message,
+  const status: number = err.status || 500;
+  const message: string = err.message || "Internal server error.";
+  const returnError: IError = {
+    statusCode: status,
+    message,
   };
-  return res.status(status).json(ReturnError);
+  return res.status(status).json(returnError);
 };
 
 export default handleError;
