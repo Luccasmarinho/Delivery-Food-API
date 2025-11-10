@@ -5,3 +5,5 @@ export interface IUser {
   password: string;
   role?: Role;
 }
+
+export type WithoutPass = Omit<IUser, "password">
