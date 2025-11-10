@@ -1,14 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodType, ZodError } from "zod";
-
-interface IvalidateBody {
-  error: string[];
-  statusCode: number;
-  fields: {
-    path: string;
-    message: string;
-  }[];
-}
+import type { IvalidateBody } from "../interfaces/common.js";
 
 const validateBody =
   (schema: ZodType) =>
@@ -16,7 +8,7 @@ const validateBody =
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<void | Response> => {
+  ): Promise<void | Response<IvalidateBody>> => {
     try {
       //nomes dos campos no body em minusculo
       const tuplaBody: [string, string][] = Object.entries(req.body);

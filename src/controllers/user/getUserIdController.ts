@@ -1,12 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import getUserIdService from "../../services/user/getUserIdService.js";
-import type { IUser } from "../../interfaces/user.js";
+import type { WithoutPass} from "../../interfaces/user.js";
 
 const getUserIdController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<Response<IUser> | void> => {
+): Promise<Response<WithoutPass> | void> => {
   try {
     const { id } = req.params;
     const getUserId = await getUserIdService(Number(id));

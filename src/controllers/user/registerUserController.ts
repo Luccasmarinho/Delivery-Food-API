@@ -7,8 +7,8 @@ const registerUserController = async (
   next: NextFunction
 ): Promise<Response | void> => {
   try {
-    const { password, ...userWithoutPassword } = await registerUserService(req.body);
-    return res.status(201).json(userWithoutPassword);
+    const registerUser = await registerUserService(req.body);
+    return res.status(201).json(registerUser);
   } catch (error) {
     return next(error);
   }
