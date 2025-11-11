@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-const sendMail = async (
+const sendMailService = async (
   bcc: string[],
   subject: string,
   html: string
@@ -28,4 +28,4 @@ const sendMail = async (
   })();
 };
 
-export default sendMail;
+export default sendMailService;
