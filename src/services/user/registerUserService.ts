@@ -2,6 +2,7 @@ import registerUserRepositorie from "../../repositories/user/registerUserReposit
 import type { IUser, WithoutPass } from "../../interfaces/user.ts";
 import findByEmailRepositorie from "../../repositories/user/findByEmailRepositorie.js";
 import bcrypt from "bcrypt";
+import registerUserMail from "../mail/registerUserMail.js";
 
 const registerUserService = async (user: IUser): Promise<WithoutPass> => {
   const emailExists = await findByEmailRepositorie(user.email);
@@ -17,6 +18,7 @@ const registerUserService = async (user: IUser): Promise<WithoutPass> => {
   }
   
   const { password, ...registerUserWithoutPasswor } = await registerUserRepositorie(newUser);
+  registerUserMail(registerUserWithoutPasswor.email)
   return registerUserWithoutPasswor;
 };
 
