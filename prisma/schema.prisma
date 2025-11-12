@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client"
-  // output   = "../generated"
+  provider = "prisma-client-js"
+  output   = "../generated"
 }
 
 datasource db {
@@ -9,15 +9,28 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(CLIENT)
-  orders    Order[]
-  createdAt DateTime @default(now())
+  id         Int                 @id @default(autoincrement())
+  name       String
+  email      String              @unique
+  password   String
+  role       Role                @default(CLIENT)
+  orders     Order[]
+  createdAt  DateTime            @default(now())
+  resetToken PasswordResetToken?
 
   @@map("user")
+}
+
+model PasswordResetToken {
+  id        Int       @id @default(autoincrement())
+  tokenHash String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int       @unique
+  createAt  DateTime  @default(now())
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  @@map("password_reset_token")
 }
 
 model Product {
@@ -35,7 +48,7 @@ model Product {
 model Order {
   id        Int         @id @default(autoincrement())
   userId    Int
-  user      User        @relation(fields: [userId], references: [id])
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   total     Float
   status    OrderStatus @default(PENDING)
   createdAt DateTime    @default(now())
@@ -47,7 +60,7 @@ model Order {
 model OrderItem {
   id        Int     @id @default(autoincrement())
   orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId Int
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int     @default(1)
