@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import forgotPasswordMail from "../../services/mail/forgotPasswordMail.js";
+import forgotPasswordMail from "../../services/user/mail/forgotPasswordMail.js";
 
 const forgotPasswordController = async (
   req: Request,
@@ -9,12 +9,10 @@ const forgotPasswordController = async (
   try {
     const { email } = req.body;
     await forgotPasswordMail(email);
-    return res
-      .status(200)
-      .json({
-        message:
-          "An email with information on how to recover your password has been sent.",
-      });
+    return res.status(200).json({
+      message:
+        "An email with information on how to recover your password has been sent.",
+    });
   } catch (error) {
     next(error);
   }

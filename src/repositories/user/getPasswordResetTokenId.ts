@@ -16,3 +16,4 @@ const getPasswordResetTokenId = async (userId: number): Promise<IPasswordResetTo
 };
 
 export default getPasswordResetTokenId;
+// mudar os nomes depois

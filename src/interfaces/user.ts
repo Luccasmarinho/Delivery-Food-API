@@ -9,7 +9,7 @@ export interface IUser {
   role?: Role;
 }
 
-interface IBaseResetToken {
+export interface IBaseResetToken {
   tokenHash: string;
   expiresAt: Date;
 }
@@ -17,8 +17,9 @@ interface IBaseResetToken {
 export interface IPasswordResetToken extends IBaseResetToken {
   userId: number;
   createAt?: Date;
+  usedAt?: Date | null;
 }
 
-export interface IGenerateHashToken extends IBaseResetToken {
-  token: string;
-}
+// export interface IGenerateHashToken extends IBaseResetToken {
+//   token: string;
+// }

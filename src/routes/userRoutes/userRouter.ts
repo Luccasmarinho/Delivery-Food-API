@@ -4,11 +4,14 @@ const userRoutes = Express.Router();
 import schemaUser from "../../schemas/schemaUser.js";
 import validateBody from "../../middleware/validateBody.js";
 
+//post
 import registerUserController from "../../controllers/user/registerUserController.js";
+import resetPasswordController from "../../controllers/user/resetPasswordController.js";
+import forgotPasswordController from "../../controllers/user/forgotPasswordController.js";
 
+//get
 import getAlluserController from "../../controllers/user/getAllUserController.js";
 import getUserIdController from "../../controllers/user/getUserIdController.js";
-import forgotPasswordController from "../../controllers/user/forgotPasswordController.js";
 
 userRoutes.post(
   "/auth/register",
@@ -20,6 +23,12 @@ userRoutes.post(
   "/auth/forgot-password",
   validateBody(schemaUser.forgotPassword),
   forgotPasswordController
+);
+
+userRoutes.post(
+  "/auth/reset-password/:token",
+  validateBody(schemaUser.resetPassword),
+  resetPasswordController
 );
 
 userRoutes.get("/users", getAlluserController);

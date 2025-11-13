@@ -7,7 +7,8 @@ const registerUserController = async (
   next: NextFunction
 ): Promise<Response | void> => {
   try {
-    const registerUser = await registerUserService(req.body);
+    const {confirm_password, ...body} = req.body
+    const registerUser = await registerUserService(body);
     return res.status(201).json(registerUser);
   } catch (error) {
     return next(error);
