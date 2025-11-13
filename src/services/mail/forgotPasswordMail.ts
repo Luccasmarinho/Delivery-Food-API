@@ -2,11 +2,11 @@ import createPasswordResetToken from "../../repositories/user/createPasswordRese
 import findByEmailRepositorie from "../../repositories/user/findByEmailRepositorie.js";
 import getPasswordResetTokenId from "../../repositories/user/getPasswordResetTokenId.js";
 import updatePasswordResetTokenId from "../../repositories/user/updatePasswordResetTokenId.js";
-import generateResetToken from "../../utils/utils.js";
+import generateHashToken from "../../utils/utils.js";
 import sendMailService from "./sendEmail.js";
 
 const forgotPasswordMail = async (email: string): Promise<void> => {
-  const { tokenHash, expiresAt, token } = generateResetToken();
+  const { tokenHash, expiresAt, token } = generateHashToken();
 
   const findUserEmail = await findByEmailRepositorie(email);
   if (!findUserEmail) throw { status: 404, message: "Email not found." };
@@ -33,7 +33,7 @@ const forgotPasswordMail = async (email: string): Promise<void> => {
         tokenHash,
         userId: findUserEmail.id,
         expiresAt,
-        createAt: new Date()
+        createAt: new Date(),
       });
   return await sendMailService([email], subject, html);
 };

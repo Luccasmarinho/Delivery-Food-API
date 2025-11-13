@@ -14,11 +14,11 @@ interface IBaseResetToken {
   expiresAt: Date;
 }
 
-export interface IPasswordResetToken extends IBaseResetToken{
+export interface IPasswordResetToken extends IBaseResetToken {
   userId: number;
   createAt?: Date;
 }
 
-export interface IGenerateResetToken extends IBaseResetToken{
+export interface IGenerateHashToken extends IBaseResetToken {
   token: string;
 }
