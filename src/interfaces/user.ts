@@ -1,9 +1,24 @@
+export type WithoutPass = Omit<IUser, "password">;
+
 type Role = "ADMIN" | "CLIENT";
 export interface IUser {
+  id: number;
   name: string;
   email: string;
   password: string;
   role?: Role;
 }
 
-export type WithoutPass = Omit<IUser, "password">
+interface IBaseResetToken {
+  tokenHash: string;
+  expiresAt: Date;
+}
+
+export interface IPasswordResetToken extends IBaseResetToken{
+  userId: number;
+  createAt?: Date;
+}
+
+export interface IGenerateResetToken extends IBaseResetToken{
+  token: string;
+}
