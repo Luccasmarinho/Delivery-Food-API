@@ -8,6 +8,7 @@ import validateBody from "../../middleware/validateBody.js";
 import registerUserController from "../../controllers/user/registerUserController.js";
 import resetPasswordController from "../../controllers/user/resetPasswordController.js";
 import forgotPasswordController from "../../controllers/user/forgotPasswordController.js";
+import authUserController from "../../controllers/user/authUserController.js";
 
 //get
 import getAlluserController from "../../controllers/user/getAllUserController.js";
@@ -29,6 +30,12 @@ userRoutes.post(
   "/auth/reset-password/:token",
   validateBody(schemaUser.resetPassword),
   resetPasswordController
+);
+
+userRoutes.post(
+  "/auth/login",
+  validateBody(schemaUser.login),
+  authUserController
 );
 
 userRoutes.get("/users", getAlluserController);

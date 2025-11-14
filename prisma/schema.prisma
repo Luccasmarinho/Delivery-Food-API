@@ -17,6 +17,7 @@ model User {
   orders     Order[]
   createdAt  DateTime            @default(now())
   resetToken PasswordResetToken?
+  refreshTokens RefreshToken[]
 
   @@map("user")
 }
@@ -31,6 +32,17 @@ model PasswordResetToken {
   usedAt    DateTime?
 
   @@map("password_reset_token")
+}
+
+model RefreshToken {
+  id    Int    @id @default(autoincrement())
+  token String @unique
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("refresh_token")
 }
 
 model Product {

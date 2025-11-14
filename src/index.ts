@@ -3,8 +3,10 @@ dotenv.config();
 import Express from "express";
 import routes from "./routes/exportRoutes/exportRoutes.js";
 import handleError from "./middleware/handleError.js";
+import cookieParser from "cookie-parser";
 const app = Express();
 
+app.use(cookieParser());
 app.use(Express.json());
 app.use(routes);
 app.use(handleError);

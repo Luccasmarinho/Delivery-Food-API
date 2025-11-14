@@ -11,7 +11,6 @@ const resetPasswordController = async (
       params: { token },
       body: { password },
     } = req;
-    console.log(token, password)
     await resetPasswordService(token!, password);
     return res.status(200).json({ message: "Password changed successfully." });
   } catch (error) {

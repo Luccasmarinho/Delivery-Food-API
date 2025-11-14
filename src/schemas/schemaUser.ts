@@ -21,6 +21,10 @@ const schemaUser = {
     email: z.email(),
   }),
   resetPassword: confirmPassword(schemaPassword),
+  login: z.object({
+    email: z.email(),
+    password: schemaPassword,
+  }),
 };
 
 // export type RegisterUserType = z.infer<typeof schemaUser.registerUser>;
