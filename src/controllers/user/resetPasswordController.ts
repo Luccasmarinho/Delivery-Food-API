@@ -1,14 +1,22 @@
-import type { Request, Response, NextFunction } from "express"
-import resetPasswordService from "../../services/user/resetPasswordService.js"
+import type { Request, Response, NextFunction } from "express";
+import resetPasswordService from "../../services/user/resetPasswordService.js";
 
-const resetPasswordController = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const {token} = req.params
-        const resetPassword = await resetPasswordService(token!) 
-        return res.status(200).json({ message: "ok" })
-    } catch (error) {
-        next(error)
-    }
-}
+const resetPasswordController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      params: { token },
+      body: { password },
+    } = req;
+    console.log(token, password)
+    await resetPasswordService(token!, password);
+    return res.status(200).json({ message: "Password changed successfully." });
+  } catch (error) {
+    next(error);
+  }
+};
 
-export default resetPasswordController
+export default resetPasswordController;

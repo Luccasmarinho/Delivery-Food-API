@@ -1,9 +1,14 @@
 import type { IPasswordResetToken } from "../../interfaces/user.js";
 import getHashTokenRepositorie from "../../repositories/user/getHashTokenRepositorie.js";
 import updateUserHashIdRepositorie from "../../repositories/user/updateUserHashRepositorie.js";
+import updateUserPasswordRepositorie from "../../repositories/user/updateUserPasswordRepositorie.js";
 import generateHashToken from "../../utils/utils.js";
+import bcrypt from "bcrypt";
 
-const resetPasswordService = async (token: string) => {
+const resetPasswordService = async (
+  token: string,
+  newPassword: string
+): Promise<void> => {
   const { tokenHash } = generateHashToken(token);
   const tokenHashData = await getHashTokenRepositorie(tokenHash);
 
@@ -18,7 +23,9 @@ const resetPasswordService = async (token: string) => {
     usedAt: new Date(),
   };
 
+  const hashPassword = await bcrypt.hash(newPassword, 10);
   await updateUserHashIdRepositorie(tokenHashData.userId, updateDataHash);
+  await updateUserPasswordRepositorie(tokenHashData.userId, hashPassword);
 };
 
 export default resetPasswordService;
