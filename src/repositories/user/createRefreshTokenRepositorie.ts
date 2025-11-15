@@ -7,7 +7,7 @@ const createRefreshTokenRepositorie = async (
   try {
     const createRefreshToken = await prisma.refreshToken.upsert({
       where: {
-        token: dataRefreshToken.token,
+        refreshToken: dataRefreshToken.refreshToken,
       },
       update: {},
       create: dataRefreshToken,

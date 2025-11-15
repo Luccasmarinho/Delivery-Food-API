@@ -9,14 +9,14 @@ datasource db {
 }
 
 model User {
-  id         Int                 @id @default(autoincrement())
-  name       String
-  email      String              @unique
-  password   String
-  role       Role                @default(CLIENT)
-  orders     Order[]
-  createdAt  DateTime            @default(now())
-  resetToken PasswordResetToken?
+  id            Int                 @id @default(autoincrement())
+  name          String
+  email         String              @unique
+  password      String
+  role          Role                @default(CLIENT)
+  createdAt     DateTime            @default(now())
+  orders        Order[]
+  resetToken    PasswordResetToken?
   refreshTokens RefreshToken[]
 
   @@map("user")
@@ -25,22 +25,22 @@ model User {
 model PasswordResetToken {
   id        Int       @id @default(autoincrement())
   tokenHash String    @unique
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int       @unique
   createAt  DateTime  @default(now())
   expiresAt DateTime
   usedAt    DateTime?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("password_reset_token")
 }
 
 model RefreshToken {
-  id    Int    @id @default(autoincrement())
-  token String @unique
-  userId Int
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createAt DateTime @default(now())
-  expiresAt DateTime
+  id           Int      @id @default(autoincrement())
+  refreshToken String   @unique(map: "refresh_token_token_key")
+  userId       Int
+  createAt     DateTime @default(now())
+  expiresAt    DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("refresh_token")
 }
@@ -60,10 +60,10 @@ model Product {
 model Order {
   id        Int         @id @default(autoincrement())
   userId    Int
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   total     Float
   status    OrderStatus @default(PENDING)
   createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   items     OrderItem[]
 
   @@map("order")
@@ -72,10 +72,10 @@ model Order {
 model OrderItem {
   id        Int     @id @default(autoincrement())
   orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId Int
-  product   Product @relation(fields: [productId], references: [id])
   quantity  Int     @default(1)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
 
   @@map("order_item")
 }

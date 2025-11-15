@@ -28,9 +28,9 @@ const authUserService = async (
   });
 
   const dataRefreshToken: IRefreshToken = {
-    token: refreshToken,
+    refreshToken: refreshToken,
     userId: emailExists.id,
-    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), //7 dias para expirar
   };
   await createRefreshTokenRepositorie(dataRefreshToken);
 

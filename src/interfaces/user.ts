@@ -1,5 +1,5 @@
 export type WithoutPass = Omit<IUser, "password">;
-
+export type AcessToken = Omit<IAuthServiceReturn, "refreshToken">;
 type Role = "ADMIN" | "CLIENT";
 export interface IUser {
   id: number;
@@ -21,11 +21,11 @@ export interface IPasswordResetToken extends IBaseResetToken {
 }
 
 export interface IPayloadToken {
-  id: number
+  id: number;
 }
 
 export interface IRefreshToken {
-  token: string;
+  refreshToken: string;
   userId: number;
   createAt?: Date;
   expiresAt: Date;
@@ -35,7 +35,6 @@ export interface IAuthServiceReturn {
   acessToken: string;
   refreshToken: string;
 }
-
 
 // export interface IGenerateHashToken extends IBaseResetToken {
 //   token: string;

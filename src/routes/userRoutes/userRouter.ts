@@ -9,6 +9,7 @@ import registerUserController from "../../controllers/user/registerUserControlle
 import resetPasswordController from "../../controllers/user/resetPasswordController.js";
 import forgotPasswordController from "../../controllers/user/forgotPasswordController.js";
 import authUserController from "../../controllers/user/authUserController.js";
+import refreshTokenController from "../../controllers/user/refreshTokenController.js";
 
 //get
 import getAlluserController from "../../controllers/user/getAllUserController.js";
@@ -37,6 +38,8 @@ userRoutes.post(
   validateBody(schemaUser.login),
   authUserController
 );
+
+userRoutes.post("/auth/refresh-token", refreshTokenController);
 
 userRoutes.get("/users", getAlluserController);
 userRoutes.get("/users/:id", getUserIdController);

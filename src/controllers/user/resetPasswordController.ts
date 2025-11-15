@@ -5,7 +5,7 @@ const resetPasswordController = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<Response<string> | void> => {
   try {
     const {
       params: { token },
