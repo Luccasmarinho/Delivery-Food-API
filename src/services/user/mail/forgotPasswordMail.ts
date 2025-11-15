@@ -11,12 +11,12 @@ const forgotPasswordMail = async (email: string): Promise<void> => {
 
   const { tokenHash, expiresAt } = generateHashToken(token);
 
-  const findUserEmail = await findByEmailRepositorie(email);
-  if (!findUserEmail) throw { status: 404, message: "Email not found." };
+  const userEmailExists = await findByEmailRepositorie(email);
+  if (!userEmailExists) throw { status: 404, message: "Email not found." };
 
   const link: string = `http://localhost:3000/auth/reset-password`;
   const html: string = `<div>
-  <p>Olá ${findUserEmail.name},</p>
+  <p>Olá ${userEmailExists.name},</p>
   <p>
     Aqui está o link para alteração de sua senha conforme nos solicitou.
     Basta clicá-lo e você será redirecionado. <a href="${link}/${token}">Clique aqui para redefinir a sua senha.</a>
@@ -25,16 +25,16 @@ const forgotPasswordMail = async (email: string): Promise<void> => {
   </div>`;
   const subject: string = "Link para alteração de senha";
 
-  const getUserId = await getPasswordResetTokenId(findUserEmail.id);
-  !getUserId
+  const userIdExists = await getPasswordResetTokenId(userEmailExists.id);
+  !userIdExists
     ? await createPasswordResetToken({
         tokenHash,
-        userId: findUserEmail.id,
+        userId: userEmailExists.id,
         expiresAt,
       })
-    : await updateUserHashIdRepositorie(findUserEmail.id, {
+    : await updateUserHashIdRepositorie(userEmailExists.id, {
         tokenHash,
-        userId: findUserEmail.id,
+        userId: userEmailExists.id,
         expiresAt,
         createAt: new Date(),
         usedAt: null

@@ -15,6 +15,8 @@ import refreshTokenController from "../../controllers/user/refreshTokenControlle
 import getAlluserController from "../../controllers/user/getAllUserController.js";
 import getUserIdController from "../../controllers/user/getUserIdController.js";
 
+import authTokenAutenticate from "../../middleware/authTokenAutenticate.js";
+
 userRoutes.post(
   "/auth/register",
   validateBody(schemaUser.registerUser),
@@ -41,7 +43,7 @@ userRoutes.post(
 
 userRoutes.post("/auth/refresh-token", refreshTokenController);
 
-userRoutes.get("/users", getAlluserController);
-userRoutes.get("/users/:id", getUserIdController);
+userRoutes.get("/users", authTokenAutenticate, getAlluserController);
+userRoutes.get("/users/:id", authTokenAutenticate, getUserIdController);
 
 export default userRoutes;
