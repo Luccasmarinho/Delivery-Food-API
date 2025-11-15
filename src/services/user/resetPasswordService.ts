@@ -16,7 +16,7 @@ const resetPasswordService = async (
     throw { status: 400, message: "Token already used or invalid." };
 
   if (new Date() > tokenHashData?.expiresAt!)
-    throw { status: 400, message: "Expired token" };
+    throw { status: 400, message: "Token has expired." };
 
   const updateDataHash: IPasswordResetToken = {
     ...tokenHashData,
