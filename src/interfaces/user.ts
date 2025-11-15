@@ -36,6 +36,11 @@ export interface IAuthServiceReturn {
   refreshToken: string;
 }
 
+export interface IVerifyToken {
+  id: number;
+  iat: number;
+  exp: number
+}
 // export interface IGenerateHashToken extends IBaseResetToken {
 //   token: string;
 // }

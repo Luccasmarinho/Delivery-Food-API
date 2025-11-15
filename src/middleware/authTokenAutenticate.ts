@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import type { IVerifyToken } from "../interfaces/user.js";
 
 const authTokenAutenticate = (
   req: Request,
@@ -8,17 +9,24 @@ const authTokenAutenticate = (
 ): void => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
-
     if (!token) throw { status: 401, message: "Unauthorized" };
-
-    const verifyToken = jwt.verify(token, process.env.SECRET_KEY!);
-    //  req.user = verifyToken.id
+    const verifyToken = jwt.verify(
+      token,
+      process.env.SECRET_KEY!
+    ) as IVerifyToken;
+    req.userId = verifyToken.id;
     next();
   } catch (error: any) {
+    const errors: string[] = [
+      "jwt malformed",
+      "jwt expired",
+      "invalid signature",
+      "invalid token",
+    ];
     if (error instanceof jwt.JsonWebTokenError) {
-      if (error.message == "jwt malformed" || error.message == "jwt expired") {
-        throw { status: 401, message: "Unauthorized" };
-      }
+      errors.forEach((e) => {
+        if (error.message === e) throw { status: 401, message: "Unauthorized" };
+      });
     }
     next(error);
   }

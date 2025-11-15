@@ -16,6 +16,7 @@ import getAlluserController from "../../controllers/user/getAllUserController.js
 import getUserIdController from "../../controllers/user/getUserIdController.js";
 
 import authTokenAutenticate from "../../middleware/authTokenAutenticate.js";
+import userAuthorizathion from "../../middleware/userAuthorization.js";
 
 userRoutes.post(
   "/auth/register",
@@ -43,7 +44,17 @@ userRoutes.post(
 
 userRoutes.post("/auth/refresh-token", refreshTokenController);
 
-userRoutes.get("/users", authTokenAutenticate, getAlluserController);
-userRoutes.get("/users/:id", authTokenAutenticate, getUserIdController);
+userRoutes.get(
+  "/users",
+  authTokenAutenticate,
+  userAuthorizathion,
+  getAlluserController
+);
+userRoutes.get(
+  "/users/:id",
+  authTokenAutenticate,
+  userAuthorizathion,
+  getUserIdController
+);
 
 export default userRoutes;
