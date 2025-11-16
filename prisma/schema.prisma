@@ -49,7 +49,7 @@ model Product {
   id          Int         @id @default(autoincrement())
   name        String
   description String?
-  price       Float
+  price       Decimal     @db.Decimal(10, 2)
   image_url   String
   createdAt   DateTime    @default(now())
   orderItems  OrderItem[]

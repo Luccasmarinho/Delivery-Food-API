@@ -24,6 +24,7 @@ const forgotPasswordMail = async (email: string): Promise<void> => {
   <p>Caso não tenha sido você, desconsidere este email.</p>
   </div>`;
   const subject: string = "Link para alteração de senha";
+  await sendMailService([email], subject, html);
 
   const userIdExists = await getPasswordResetTokenId(userEmailExists.id);
   !userIdExists
@@ -39,7 +40,6 @@ const forgotPasswordMail = async (email: string): Promise<void> => {
         createAt: new Date(),
         usedAt: null
       });
-  return await sendMailService([email], subject, html);
 };
 
 export default forgotPasswordMail;
