@@ -5,11 +5,7 @@ const createProductsService = async (
   products: IProducts
 ): Promise<IProducts> => {
   const createProducts = await createProductsRepositorie(products);
-  const returnCreateProducts = {
-    ...createProducts,
-    price: Number(createProducts.price).toFixed(2),
-  };
-  return returnCreateProducts;
+  return createProducts;
 };
 
 export default createProductsService;

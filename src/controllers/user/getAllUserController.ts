@@ -1,11 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import getAllUserService from "../../services/user/getAllUserService.js";
+import type { WithoutPass } from "../../interfaces/user.js";
 
 const getAlluserController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<Response | void> => {
+): Promise<Response<WithoutPass> | void> => {
   try {
     const getAllUser = await getAllUserService();
     return res.status(200).json(getAllUser);
