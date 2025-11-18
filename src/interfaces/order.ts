@@ -7,7 +7,12 @@ export interface IItens {
   quantity: number;
 }
 
+export interface IOrderItems extends IItens {
+  orderId: number;
+}[]
+
 export interface IOrder {
+  id?:number;
   userId: number;
   total: number;
   status?: Status;

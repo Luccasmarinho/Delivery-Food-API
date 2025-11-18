@@ -1,7 +1,7 @@
 import type { IItens, IOrderService } from "../../interfaces/order.js";
+import createOrderItemsRepositorie from "../../repositories/orders/createOrderItemsRepositorie.js";
 import createOrderRepositorie from "../../repositories/orders/createOrderRepositorie.js";
 import getProductIdRepositorie from "../../repositories/orders/getProductIdRepositorie.js";
-
 
 const createOrderService = async (
   userId: number,
@@ -35,6 +35,12 @@ const createOrderService = async (
     total: Number(priceTotal),
   };
   const createOrder = await createOrderRepositorie(order);
+  const orderItems = items.map((e) => ({
+    ...e,
+    orderId: createOrder.id!,
+  }));
+  await createOrderItemsRepositorie(orderItems);
+
   const itemsReturn = items
     .map((e, i) => ({
       ...e,
