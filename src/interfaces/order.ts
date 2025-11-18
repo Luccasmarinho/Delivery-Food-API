@@ -9,10 +9,11 @@ export interface IItens {
 
 export interface IOrderItems extends IItens {
   orderId: number;
-}[]
+}
+[];
 
 export interface IOrder {
-  id?:number;
+  id?: number;
   userId: number;
   total: number;
   status?: Status;
@@ -26,9 +27,9 @@ export interface IItemReturn {
     name: string;
     price: Decimal;
   };
-};
+}
 
-export interface IOrderService {
+export interface IOrderReturn {
   userId: number;
   total: number;
   status?: Status;

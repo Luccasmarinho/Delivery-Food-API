@@ -1,6 +1,9 @@
+import type { IOrderReturn } from "../../interfaces/order.js";
 import prisma from "../../prismaClient/prismaClient.js";
 
-const getOrderIdRepositorie = async (id: number) => {
+const getOrderIdRepositorie = async (
+  id: number
+): Promise<IOrderReturn | void> => {
   try {
     const getOrderId = await prisma.order.findUnique({
       where: { id },
@@ -13,14 +16,15 @@ const getOrderIdRepositorie = async (id: number) => {
             product: {
               select: {
                 name: true,
-                price: true
+                price: true,
               },
             },
           },
         },
       },
     });
-    return getOrderId
+    if (!getOrderId) return;
+    return getOrderId;
   } catch (error: any) {
     throw new Error(error.message);
   }

@@ -1,12 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import createOrderService from "../../services/orders/createOrderService.js";
-import type { IOrderService } from "../../interfaces/order.js";
+import type { IOrderReturn } from "../../interfaces/order.js";
 
 const createOrderController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<Response<IOrderService> | void> => {
+): Promise<Response<IOrderReturn> | void> => {
   try {
     const {
       body: { items },

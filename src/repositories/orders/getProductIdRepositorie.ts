@@ -1,4 +1,3 @@
-import type { Decimal } from "@prisma/client/runtime/library";
 import type { IItens } from "../../interfaces/order.js";
 import prisma from "../../prismaClient/prismaClient.js";
 import type { IProducts } from "../../interfaces/products.js";

@@ -1,4 +1,4 @@
-import type { IItens, IOrderService } from "../../interfaces/order.js";
+import type { IItens, IOrderReturn } from "../../interfaces/order.js";
 import createOrderItemsRepositorie from "../../repositories/orders/createOrderItemsRepositorie.js";
 import createOrderRepositorie from "../../repositories/orders/createOrderRepositorie.js";
 import getProductIdRepositorie from "../../repositories/orders/getProductIdRepositorie.js";
@@ -6,7 +6,7 @@ import getProductIdRepositorie from "../../repositories/orders/getProductIdRepos
 const createOrderService = async (
   userId: number,
   items: IItens[]
-): Promise<IOrderService> => {
+): Promise<IOrderReturn> => {
   const getProductId = await getProductIdRepositorie(items);
 
   if (getProductId.length === 0)
