@@ -9,6 +9,9 @@ const schemaOrder = {
       })
     ),
   }),
+  updateStatus: z.object({
+    status: z.enum(["PENDING", "ACCEPTED", "REJECTED", "DELIVERED"]),
+  }),
 };
 
 export default schemaOrder;

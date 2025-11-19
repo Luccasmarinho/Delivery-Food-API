@@ -8,6 +8,7 @@ import createOrderController from "../../controllers/order/createOrderController
 import getOrderIdController from "../../controllers/order/getOrderIdController.js";
 
 import schemaOrder from "../../schemas/schemaOrder.js";
+import updateStatusOrderController from "../../controllers/order/updateStatusOrderController.js";
 
 const orderRoutes = Express.Router();
 
@@ -22,6 +23,14 @@ orderRoutes.get(
   authTokenAutenticate,
   userAuthorizathion,
   getOrderIdController
+);
+
+orderRoutes.patch(
+  "/orders/:id/status",
+  authTokenAutenticate,
+  userAuthorizathion,
+  validateBody(schemaOrder.updateStatus),
+  updateStatusOrderController
 );
 
 export default orderRoutes;
