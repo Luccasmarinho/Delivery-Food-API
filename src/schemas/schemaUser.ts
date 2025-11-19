@@ -12,8 +12,6 @@ const schemaUser = {
     .object({
       name: z.string().min(1),
       email: z.email(),
-      password: schemaPassword,
-      confirm_password: schemaPassword,
       role: z.enum(["ADMIN", "CLIENT"]).optional(),
     })
     .and(confirmPassword(schemaPassword)),
