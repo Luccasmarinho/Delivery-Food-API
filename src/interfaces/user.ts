@@ -1,6 +1,8 @@
+import type { IItemReturn } from "./order.js";
 export type WithoutPass = Omit<IUser, "password">;
 export type AcessToken = Omit<IAuthServiceReturn, "refreshToken">;
 type Role = "ADMIN" | "CLIENT";
+export type Status = "PENDING" | "ACCEPTED" | "REJECTED" | "DELIVERED";
 export interface IUser {
   id: number;
   name: string;
@@ -39,8 +41,13 @@ export interface IAuthServiceReturn {
 export interface IVerifyToken {
   id: number;
   iat: number;
-  exp: number
+  exp: number;
 }
-// export interface IGenerateHashToken extends IBaseResetToken {
-//   token: string;
-// }
+
+export interface IUserOrderId {
+  id: number;
+  total: number;
+  status: Status;
+  createdAt: Date;
+  items: IItemReturn[];
+}

@@ -18,6 +18,7 @@ import getUserIdController from "../../controllers/user/getUserIdController.js";
 import authTokenAutenticate from "../../middleware/authTokenAutenticate.js";
 import userAuthorizathion from "../../middleware/userAuthorization.js";
 import logoutUserController from "../../controllers/user/logoutUserController.js";
+import getUserOrderIdController from "../../controllers/user/getUserOrderIdController.js";
 
 userRoutes.post(
   "/auth/register",
@@ -58,10 +59,13 @@ userRoutes.get(
   getUserIdController
 );
 
-userRoutes.post(
-  "/auth/logout",
+userRoutes.post("/auth/logout", authTokenAutenticate, logoutUserController);
+
+userRoutes.get(
+  "/users/:userId/orders",
   authTokenAutenticate,
-  logoutUserController
+  userAuthorizathion,
+  getUserOrderIdController
 );
 
 export default userRoutes;
