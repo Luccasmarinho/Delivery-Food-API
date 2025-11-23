@@ -21,7 +21,7 @@ orderRoutes.post(
 orderRoutes.get(
   "/orders/:id",
   authTokenAutenticate,
-  userAuthorizathion,
+  // userAuthorizathion,
   getOrderIdController
 );
 
