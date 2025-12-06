@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-import getUserIdRepositorie from "../repositories/user/getUserIdRepositorie.js";
 import type { IUser } from "../interfaces/user.js";
+import { UserRepository } from "../repositories/UserRepository.js";
+const userRepository = new UserRepository();
 
 const userAuthorizathion = async (
   req: Request,
@@ -8,7 +9,7 @@ const userAuthorizathion = async (
   next: NextFunction
 ) => {
   try {
-    const getUserId = (await getUserIdRepositorie(req.userId)) as IUser;
+    const getUserId = (await userRepository.getUserId(req.userId)) as IUser;
     if (getUserId.role === "CLIENT")
       throw {
         status: 403,

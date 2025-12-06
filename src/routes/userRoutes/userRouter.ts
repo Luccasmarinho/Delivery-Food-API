@@ -3,69 +3,61 @@ const userRoutes = Express.Router();
 
 import schemaUser from "../../schemas/schemaUser.js";
 import validateBody from "../../middleware/validateBody.js";
-
-//post
-import registerUserController from "../../controllers/user/registerUserController.js";
-import resetPasswordController from "../../controllers/user/resetPasswordController.js";
-import forgotPasswordController from "../../controllers/user/forgotPasswordController.js";
-import authUserController from "../../controllers/user/authUserController.js";
-import refreshTokenController from "../../controllers/user/refreshTokenController.js";
-
-//get
-import getAlluserController from "../../controllers/user/getAllUserController.js";
-import getUserIdController from "../../controllers/user/getUserIdController.js";
-
+import userFactory from "../../factories/userFactory.js";
 import authTokenAutenticate from "../../middleware/authTokenAutenticate.js";
 import userAuthorizathion from "../../middleware/userAuthorization.js";
-import logoutUserController from "../../controllers/user/logoutUserController.js";
-import getUserOrderIdController from "../../controllers/user/getUserOrderIdController.js";
 
 userRoutes.post(
   "/auth/register",
   validateBody(schemaUser.registerUser),
-  registerUserController
+  (req, res, next) => userFactory().registerUser(req, res, next)
 );
 
 userRoutes.post(
   "/auth/forgot-password",
   validateBody(schemaUser.forgotPassword),
-  forgotPasswordController
+  (req, res, next) => userFactory().forgotPassword(req, res, next)
 );
 
 userRoutes.post(
   "/auth/reset-password/:token",
   validateBody(schemaUser.resetPassword),
-  resetPasswordController
+  (req, res, next) => userFactory().resetPassword(req, res, next)
 );
 
 userRoutes.post(
   "/auth/login",
   validateBody(schemaUser.login),
-  authUserController
+  (req, res, next) => userFactory().authUser(req, res, next)
 );
 
-userRoutes.post("/auth/refresh-token", refreshTokenController);
+userRoutes.post("/auth/refresh-token", (req, res, next) =>
+  userFactory().refreshToken(req, res, next)
+);
 
 userRoutes.get(
   "/users",
   authTokenAutenticate,
   userAuthorizathion,
-  getAlluserController
+  (req, res, next) => userFactory().getAlluser(req, res, next)
 );
+
 userRoutes.get(
   "/users/:id",
   authTokenAutenticate,
   userAuthorizathion,
-  getUserIdController
+  (req, res, next) => userFactory().getUserId(req, res, next)
 );
 
-userRoutes.post("/auth/logout", authTokenAutenticate, logoutUserController);
+userRoutes.post("/auth/logout", authTokenAutenticate, (req, res, next) =>
+  userFactory().logoutUser(req, res, next)
+);
 
 userRoutes.get(
   "/users/:userId/orders",
   authTokenAutenticate,
   userAuthorizathion,
-  getUserOrderIdController
+  (req, res, next) => userFactory().getUserOrderId(req, res, next)
 );
 
 export default userRoutes;

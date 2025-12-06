@@ -6,8 +6,9 @@ import type { SignOptions } from "jsonwebtoken";
 
 const generateHashToken = (token: string): IBaseResetToken => {
   // const token = crypto.randomBytes(32).toString("hex");
+  const tokenMs = 15 * 60 * 1000 //15 min em milissegundos
   const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
-  const expiresAt = new Date(Date.now() + 15 * 60 * 1000); //expira em 15 min
+  const expiresAt = new Date(Date.now() + tokenMs); //expira em 15 min
   return { tokenHash, expiresAt };
 };
 

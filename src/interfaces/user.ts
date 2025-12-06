@@ -51,3 +51,38 @@ export interface IUserOrderId {
   createdAt: Date;
   items: IItemReturn[];
 }
+
+export interface IUserRepository {
+  createPasswordResetToken(
+    data: IPasswordResetToken
+  ): Promise<IPasswordResetToken>;
+  createRefreshToken(dataRefreshToken: IRefreshToken): Promise<IRefreshToken>;
+  deleteRefreshToken(refreshToken: string): Promise<void>;
+  findByEmail(email: string): Promise<IUser | void>;
+  getAllUser(): Promise<IUser[]>;
+  getHashToken(tokenHash: string): Promise<IPasswordResetToken | null>;
+  getPasswordResetTokenId(userId: number): Promise<IPasswordResetToken | void>;
+  getRefreshToken(refreshToken: string): Promise<IRefreshToken | void>;
+  getUserId(id: number): Promise<IUser | void>;
+  getUserOrderId(userId: number): Promise<IUserOrderId[]>;
+  registerUser(user: IUser): Promise<IUser>;
+  updateUserHashId(
+    userId: number,
+    data: IPasswordResetToken
+  ): Promise<IPasswordResetToken>;
+  updateUserPassword(id: number, newPassword: string): Promise<IUser>;
+}
+
+export interface IUserServices {
+  authUser(email: string, password: string): Promise<IAuthServiceReturn>;
+  registerUser(user: IUser): Promise<WithoutPass>;
+  sendMailService(bcc: string[], subject: string, html: string): Promise<void>;
+  forgotPasswordMail(email: string): Promise<void>;
+  registerUserMail(email: string): Promise<void>;
+  getAllUser(): Promise<WithoutPass[]>;
+  getUserId(id: number): Promise<WithoutPass>;
+  getUserOrderId(userId: number): Promise<IUserOrderId[]>;
+  logoutUser(refreshToken: string): Promise<void>;
+  refreshToken(dataRefreshToken: string): Promise<string>;
+  resetPassword(token: string, newPassword: string): Promise<void>;
+}
