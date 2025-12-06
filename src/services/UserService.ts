@@ -6,7 +6,7 @@ import type {
   IUser,
   IUserOrderId,
   IUserRepository,
-  IUserServices,
+  IUserService,
   WithoutPass,
 } from "../interfaces/user.js";
 import generateHashToken, { generateTokenJwt } from "../utils/utils.js";
@@ -25,7 +25,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 
-export class UserServices implements IUserServices {
+export class UserService implements IUserService {
   constructor(private userRepository: IUserRepository) {}
 
   async authUser(email: string, password: string): Promise<IAuthServiceReturn> {
@@ -185,7 +185,7 @@ export class UserServices implements IUserServices {
   async resetPassword(token: string, newPassword: string): Promise<void> {
     const { tokenHash } = generateHashToken(token);
     const tokenHashData = await tokenHashValidator(tokenHash);
-  
+
     const updateDataHash: IPasswordResetToken = {
       ...tokenHashData,
       usedAt: new Date(),

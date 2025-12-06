@@ -73,7 +73,7 @@ export interface IUserRepository {
   updateUserPassword(id: number, newPassword: string): Promise<IUser>;
 }
 
-export interface IUserServices {
+export interface IUserService {
   authUser(email: string, password: string): Promise<IAuthServiceReturn>;
   registerUser(user: IUser): Promise<WithoutPass>;
   sendMailService(bcc: string[], subject: string, html: string): Promise<void>;

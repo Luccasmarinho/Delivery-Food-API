@@ -1,11 +1,8 @@
 import Express from "express";
 const productsRoutes = Express.Router();
 
+import productFactory from "../../factories/productFactory.js";
 import schemaProducts from "../../schemas/schemaProducts.js";
-
-import createProductsController from "../../controllers/products/createProductsController.js";
-
-import getAllProductsController from "../../controllers/products/getAllProductsController.js";
 
 import validateBody from "../../middleware/validateBody.js";
 import userAuthorizathion from "../../middleware/userAuthorization.js";
@@ -16,9 +13,11 @@ productsRoutes.post(
   authTokenAutenticate,
   userAuthorizathion,
   validateBody(schemaProducts.products),
-  createProductsController
+  (req, res, next) => productFactory().createProduct(req, res, next)
 );
 
-productsRoutes.get("/products", authTokenAutenticate, getAllProductsController);
+productsRoutes.get("/products", authTokenAutenticate, (req, res, next) =>
+  productFactory().getAllProduct(req, res, next)
+);
 
 export default productsRoutes;

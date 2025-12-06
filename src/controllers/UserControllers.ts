@@ -2,12 +2,12 @@ import type { Request, Response, NextFunction } from "express";
 import type {
   AcessToken,
   IUserOrderId,
-  IUserServices,
+  IUserService,
   WithoutPass,
 } from "../interfaces/user.js";
 
 export class UserController {
-  constructor(private userService: IUserServices) {}
+  constructor(private userService: IUserService) {}
 
   async authUser(
     req: Request,
