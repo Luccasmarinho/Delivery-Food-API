@@ -1,28 +1,25 @@
 import Express from "express";
+const orderRoutes = Express.Router();
+
+import schemaOrder from "../../schemas/schemaOrder.js";
+import orderFactory from "../../factories/orderFactory.js";
 
 import validateBody from "../../middleware/validateBody.js";
 import authTokenAutenticate from "../../middleware/authTokenAutenticate.js";
 import userAuthorizathion from "../../middleware/userAuthorization.js";
 
-import createOrderController from "../../controllers/order/createOrderController.js";
-import getOrderIdController from "../../controllers/order/getOrderIdController.js";
-
-import schemaOrder from "../../schemas/schemaOrder.js";
-import updateStatusOrderController from "../../controllers/order/updateStatusOrderController.js";
-
-const orderRoutes = Express.Router();
-
 orderRoutes.post(
   "/orders",
   authTokenAutenticate,
   validateBody(schemaOrder.createOrder),
-  createOrderController
+  (req, res, next) => orderFactory().createOrder(req, res, next)
 );
+
 orderRoutes.get(
   "/orders/:id",
   authTokenAutenticate,
   // userAuthorizathion,
-  getOrderIdController
+  (req, res, next) => orderFactory().getOrderId(req, res, next)
 );
 
 orderRoutes.patch(
@@ -30,7 +27,7 @@ orderRoutes.patch(
   authTokenAutenticate,
   userAuthorizathion,
   validateBody(schemaOrder.updateStatus),
-  updateStatusOrderController
+  (req, res, next) => orderFactory().updateStatusOrder(req, res, next)
 );
 
 export default orderRoutes;

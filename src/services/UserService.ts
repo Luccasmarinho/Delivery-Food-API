@@ -18,8 +18,8 @@ import {
   refreshTokenExistsValidator,
   refreshTokenExpiredValidator,
   tokenHashValidator,
-  UserIdExistsValidator,
-  UserOrderIdExistsValidator,
+  userIdExistsValidator,
+  userOrderIdExistsValidator,
 } from "../validators/userBusinessValidator.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
@@ -152,14 +152,14 @@ export class UserService implements IUserService {
 
   async getUserId(id: number): Promise<WithoutPass> {
     invalidUserIdValidator(id);
-    const getUserId = await UserIdExistsValidator(id);
+    const getUserId = await userIdExistsValidator(id);
     const { password, ...userIdWithoutPassword } = getUserId;
     return userIdWithoutPassword;
   }
 
   async getUserOrderId(userId: number): Promise<IUserOrderId[]> {
     invalidUserIdValidator(userId);
-    const getUserOrderId = await UserOrderIdExistsValidator(userId);
+    const getUserOrderId = await userOrderIdExistsValidator(userId);
     return getUserOrderId;
   }
 

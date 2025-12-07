@@ -13,11 +13,12 @@ productsRoutes.post(
   authTokenAutenticate,
   userAuthorizathion,
   validateBody(schemaProducts.products),
-  (req, res, next) => productFactory().createProduct(req, res, next)
+  (req, res, next) =>
+    productFactory().productController.createProduct(req, res, next)
 );
 
 productsRoutes.get("/products", authTokenAutenticate, (req, res, next) =>
-  productFactory().getAllProduct(req, res, next)
+  productFactory().productController.getAllProduct(req, res, next)
 );
 
 export default productsRoutes;

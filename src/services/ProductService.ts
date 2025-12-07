@@ -1,5 +1,4 @@
-import type { IProducts } from "../interfaces/products.js";
-import type { IProductRepository } from "../repositories/ProductRepository.js";
+import type { IProductRepository, IProducts } from "../interfaces/products.js";
 
 export interface IProductService {
   createProduct(products: IProducts): Promise<IProducts>;

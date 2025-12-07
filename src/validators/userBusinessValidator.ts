@@ -43,13 +43,13 @@ export const invalidUserIdValidator = (id: number): void => {
     throw { status: 400, message: "Invalid user ID. Expected a number" };
 };
 
-export const UserIdExistsValidator = async (id: number): Promise<IUser> => {
+export const userIdExistsValidator = async (id: number): Promise<IUser> => {
   const getUserId = await userRepository.getUserId(id);
   if (!getUserId) throw { status: 404, message: "User not found." };
   return getUserId;
 };
 
-export const UserOrderIdExistsValidator = async (
+export const userOrderIdExistsValidator = async (
   userId: number
 ): Promise<IUserOrderId[]> => {
   const getUserOrderId = await userRepository.getUserOrderId(userId);
